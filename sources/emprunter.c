@@ -36,8 +36,11 @@ int emprunter() {
         {
             do
             {
+                time_t date_sor;
                 time_t date_lim;
-                printf(" \n \n ------->   Enter votre Identifiant %d \n",date_lim);
+                time(&date_sor);
+                
+                printf("  \n %d ",date_sor);
 
                 char emprunt[1000];
                 char liv[1000]; //reçoit une requette qui diminue le nombre de libre 
