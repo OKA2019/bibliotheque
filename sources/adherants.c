@@ -2,19 +2,17 @@
 #include <string.h>
 #include "arpa/inet.h"
 #include "MYSQL/mysql.h"
-#include "../header/livres.h"
-#include "../header/emprunter.h"
+#include "../header/gestion.h"
 #include "../header/bibliotheque.h"
 
 
 
 int adherants(){
 
-    void livres();
-    int emprunter();
+    int main();
 
-    int continuer, ajouter = 1,age,contact;
-    char num_Adh[30],nom[30],prenoms[50],residence[30];
+    int ajouter = 1,age,contact,sexe=0;
+    char num_Adh[30],nom[30],prenoms[50],residence[30],continuer[5];
     MYSQL mysql;
 
     //initialisation 
@@ -36,6 +34,8 @@ int adherants(){
             scanf("%s",&prenoms);
             printf(" Age :  ");
             scanf("%d",&age);
+            printf(" Sexe :  \n Taper  1 - Homme           2 - Femme \n ");
+            scanf("%d",&sexe);
             printf(" Contact :  ");
             scanf("%d",&contact);
             printf(" residence :  ");
@@ -43,7 +43,7 @@ int adherants(){
 
             char add[1000]; 
             //Copie de la requette dans la variables add
-            sprintf(add, "INSERT INTO Adherents(num_Adh,nom,prenoms,age,contact,residence) VALUES ('%s','%s','%s','%d','%d','%s')",num_Adh,nom,prenoms,age,contact,residence);
+            sprintf(add, "INSERT INTO Adherents(num_Adh,nom,prenoms,age,contact,residence,sexe) VALUES ('%s','%s','%s','%d','%d','%s','%d')",num_Adh,nom,prenoms,age,contact,residence,sexe);
             
             if(!mysql_query(&mysql,add))
             {
@@ -51,12 +51,16 @@ int adherants(){
 
                 printf(" \n \n Votre NUMERO D'IDENTFIANT est le %s . \n  Garder le precieusement \n \n ",num_Adh);
 
-                main();
+                printf(" \n Taper un caractere puis Entrer pour continuer \n  ");
+
+                scanf("%c",&continuer);
+
+                livres();
                 
             }
             else
             {
-                printf("Echec veuillez ressayer");
+                printf(" \n \n Echec veuillez réessayer !!! \n ");
                 ajouter=0;
             }
         } while (ajouter==0);

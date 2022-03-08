@@ -3,24 +3,14 @@
 #include "arpa/inet.h"
 #include "MYSQL/mysql.h"
 #include <time.h>
-//#include "../header/livres.h"
+#include "../header/gestion.h"
 
- struct livres{
-    char num_liv[30];
-    char titre[100];
-    char auteur[30];
-    char mot_cle[100];
-    int date_par;
-    int nb_exem ;
-    };
     
-int ajouter_lives()
+int ajouter_livres()
 {
 
-    int continuer, ajouter = 1;
-
-    struct livres liv1;
-
+    int continuer;
+    char ajouter;
     MYSQL mysql;
 
     //initialisation 
@@ -32,30 +22,39 @@ int ajouter_lives()
     {
         do
         {
+
+            int age,contact,date_par,nb_exem;
+            char num_liv[30],titre[50],auteur[50],mot_cle[100];
             printf(" \n \n  ****** Veiller renseigner les informations du ou des livre(s) \n \n ");
 
-            printf("Numero :  ");
-            scanf("%s",&liv1.num_liv);
-            printf("Titre :  ");
-            gets(liv1.titre);
-            printf("\n Auteur : %s \n ",liv1.titre);
-            gets(liv1.auteur);
-            printf("Mots clé du livres :  ");
-            gets(liv1.mot_cle);
-            printf("Année de parution :  ");
-            scanf("%d",&liv1.date_par);
-            printf("Nombre d'exemplaire :  ");
-            scanf("%d",&liv1.nb_exem);
+            printf("    Numero :  ");
+            scanf("%s",&num_liv);
+            printf("    Titre :  ");
+            scanf("%s",&titre);
+            printf("\n  Auteur : ");
+            scanf("%s",&auteur);
+            printf("    Mots clé du livres :  ");
+            scanf("%s",&mot_cle);
+            printf("    Année de parution :  ");
+            scanf("%d",&date_par);
+            printf("    Nombre d'exemplaire :  ");
+            scanf("%d",&nb_exem);
 
-            
-            if(mysql_query(&mysql,&liv1))
+            char liv[1000];
+            sprintf(liv,"INSERT INTO livres VALUES('%s','%s','%s','%s','%d','%d')",num_liv,titre,auteur,mot_cle,date_par,nb_exem);
+
+            if(!mysql_query(&mysql,liv))
             {
                 printf("Les livres ont été ajouter avec succes\n \n ");
 
                 printf(" \ n Taper 1 pour Ajouter d'autre livres \n ");
 
-                scanf("%d",&ajouter);
-                if (ajouter!=1)
+                scanf("%s",&ajouter);
+                if (ajouter=="1")
+                {
+                    ajouter = "0";
+                }
+                else
                 {
                    gestion();
                 }
@@ -64,9 +63,9 @@ int ajouter_lives()
             else
             {
                 printf("Echec veuillez ressayer");
-                ajouter=0;
+                ajouter="0";
             }
-        } while (ajouter==0);
+        } while (ajouter=="0");
 
     }
     else

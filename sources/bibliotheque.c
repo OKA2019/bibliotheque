@@ -6,15 +6,19 @@
 #include "../header/adherants.h"
 #include "../header/emprunter.h"
 #include "../header/deposer.h"
+#include "../header/gestion.h"
 
 
 int main()
-{
+{ 
+    system("clear");
+    
     //Appel initialisations des differents fonctions
     int adherants();
     int emprunter();
     void livres();
     int deposer();
+    int gestion();
 
     //Variables 
     int choix;
@@ -28,24 +32,35 @@ int main()
     printf(" \n ------->  2 - Emprunter ");
     printf(" \n ------->  3 - Deposer");
     printf(" \n ------->  4 - Inscription");
-    printf(" \n ------->  5 - Quitter \n");
+    printf(" \n ------->  5 - Gestionnaire");
+    printf(" \n ------->  6 - Quitter \n");
     printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
-    scanf("%d",&choix);
     
-    switch(choix)
+    do
     {
-        case 1 :
-            livres();
-            emprunter();
-        case 2 :
-            emprunter();
-        case 3 :
-            deposer();
-        case 4 :
-            adherants();
-        default :
-            printf(" \n Merci d'être venu, a la prochaine ");
-    }
+        scanf("%d",&choix);
+        switch(choix)
+        {
+            case 1 :
+                livres();
+                emprunter();
+            case 2 :
+                emprunter();
+            case 3 :
+                deposer();
+            case 4 :
+                adherants();
+            case 5 :
+                gestion();
+            case 6 :
+                printf(" \n Merci d'être venu, a la prochaine ");
+            default :
+                printf(" \n ERREUR DE SAISI VUEILLER RÉESSAYER ! ");
+                choix==0;
+        }
+    } while (choix!=0);
+    
+    
 
     return 0;
 }

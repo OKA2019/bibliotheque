@@ -10,6 +10,7 @@ int livres()
 
 
 
+    system("clear");
     printf("  \n \n ******************************** NOS LIVRES ******************************** \n \n ");
 
     MYSQL mysql;
@@ -37,8 +38,8 @@ int livres()
             printf(" \n Titre %s", row[1]);
             printf(" \n Auteur : %s", row[2]);
             printf(" \n Mots cles : %s", row[3]);
-            printf(" \n Date de parution : %d ", row[4]);
-            printf(" \n Nombre d'exemplaire :  %d ", row[5]);
+            printf(" \n Date de parution : %s ", row[4]);
+            printf(" \n Nombre d'exemplaire :  %s ", row[5]);
         }
         //Libération du jeu de résultat
         mysql_free_result(result);

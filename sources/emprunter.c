@@ -39,8 +39,6 @@ int emprunter() {
                 time_t date_sor;
                 time_t date_lim;
                 time(&date_sor);
-                
-                printf("  \n %d ",date_sor);
 
                 char emprunt[1000];
                 char liv[1000]; //reçoit une requette qui diminue le nombre de libre 
@@ -59,7 +57,7 @@ int emprunter() {
                 //char nb = "SELECT nb_exem FROM livres WHERE num_liv='%d'",num_liv;
                 //int row = mysql_query(&mysql,nb);
 
-                sprintf(emprunt,"INSERT INTO Emprunt(num_emp,date_sor,date_ret,date_lim,num_Adh,num_liv,statut) VALUES('%d','%d','%d','%d','%s','%s','%d')",num_emp,date_sor,date_ret,date_lim,num_Adh,num_liv,statut);
+                sprintf(emprunt,"INSERT INTO Emprunt(num_emp,date_sor,date_ret,date_lim,iden_Adh,iden_liv,statut) VALUES('%d','%d','%d','%d','%s','%s','%d')",num_emp,date_sor,date_ret,date_lim,num_Adh,num_liv,statut);
                 //sprintf(liv,"UPDATE livres SET nb_exem ='%d' WHERE num_liv='%s'",row-1,num_liv);
                 
                 if(!mysql_query(&mysql,emprunt))

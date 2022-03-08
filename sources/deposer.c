@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "arpa/inet.h"
 #include "MYSQL/mysql.h"
-#include <string.h>
 #include  <time.h>
 #include "../header/livres.h"
 #include "../header/bibliotheque.h"
@@ -29,11 +28,9 @@ int deposer()
         do
         {
             time_t date_ret;
-
-            printf(" \n ------->   ICI 2 : %d \n",date_ret);
             char retour[1000];
 
-            printf(" \n ------->   Enter votre Identifiant \n");
+            printf(" \n \n ------->   Enter votre Identifiant \n");
             scanf("%s",&num_Adh);
 
             printf(" \n \n  ------->  Veillez entrer le numero du livre  \n");
@@ -63,7 +60,7 @@ int deposer()
                 deposer = 1;
             }
 
-        }while (deposer==1);
+        }while (deposer!=1);
         
     }
     else
