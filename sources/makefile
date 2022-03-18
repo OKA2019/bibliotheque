@@ -1,5 +1,5 @@
-biblio_num : ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o bibliotheque.o 
-	gcc -o biblio_num ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o bibliotheque.o -L. -lmysqlclient
+biblio_num : ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o main.o 
+	gcc -o biblio_num ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o main.o -L. -lmysqlclient
 
 ajouter_livres.o : ajouter_livres.c
 	gcc -c ajouter_livres.c
@@ -25,8 +25,8 @@ liste_adherants.o : liste_adherants.c
 gestion.o : gestion.c
 	gcc -c gestion.c
 
-bibliotheque.o : bibliotheque.c
-	gcc -c bibliotheque.c
+main.o : main.c
+	gcc -c main.c
 
 clean:
 	rm *.o biblio_num

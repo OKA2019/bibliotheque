@@ -44,23 +44,29 @@ int main()
             case 1 :
                 livres();
                 emprunter();
+                break;
             case 2 :
                 emprunter();
+                break;
             case 3 :
                 deposer();
             case 4 :
                 adherants();
+                break;
             case 5 :
                 gestion();
+                break;
             case 6 :
                 printf(" \n Merci d'être venu, a la prochaine ");
+                break;
             default :
                 printf(" \n ERREUR DE SAISI VUEILLER RÉESSAYER ! ");
-                choix==0;
+                choix = 0;
         }
-    } while (choix!=0);
+    } while (choix == 0);
     
     
+    printf(" \n SORTIE ");
 
     return 0;
 }

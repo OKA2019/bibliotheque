@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "arpa/inet.h"
 #include "MYSQL/mysql.h"
 #include "../header/gestion.h"
@@ -29,7 +30,7 @@ void liste_emprunts()
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
     {
         //Requête qui sélectionne tout dans ma table scores
-        mysql_query(&mysql, "SELECT nom,prenoms,contact,residence,titre,auteur,date_par,date_sor,date_lim FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut=0 ");
+        mysql_query(&mysql, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim) FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut=0 ");
         //Déclaration des objets
         MYSQL_RES *result = NULL;
         MYSQL_ROW resul;
@@ -38,11 +39,19 @@ void liste_emprunts()
         result = mysql_use_result(&mysql);
         
         //Tant qu'il y a encore un résultat ...
+        char numero[4] = "N°";
+        char noms[35] = "Nom et prenoms";
+        char Contacts[10] = "Contacts";
+        char Residence[12] = "Residence";
+        char Titre[15] = "Titre";
+        char Auteur[12] = "Auteur";
+        char sortie[18] = "Date de sortie";
+        char limite[18] = "Date limite";
 
-        printf(" \n \n N°       Nom et prenoms                Contacts       Residence      Titre          Auteur              Paru  Date de sortie         date limite   \n  ");
+        printf(" \n \n |  %4s | %35s | %12s | %12s | %15s | %15s | %19s | %19s | \n  ", numero,noms,Contacts,Residence,Titre,Auteur,sortie,limite);
         while ((resul = mysql_fetch_row(result)))
         {
-            printf(" \n \n %d       %s %s                 %s        %s      %s        %s              %s        %s          %s    \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],ctime(resul[7]),ctime(resul[8]));
+            printf(" \n \n | %4d | %10s %24s | %12s | %12s | %15s | %15s | %18s | %18s | \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],resul[7]);
             i++;
         }
 
