@@ -57,10 +57,10 @@ int emprunter() {
                 date_lim = date_sorti + nb_emprunt;
                 
                 sprintf(emprunt,"INSERT INTO Emprunt(num_emp,date_sor,date_ret,date_lim,iden_Adh,iden_liv,statut) VALUES('%d','%d','%d','%d','%s','%s','%d')",num_emp,abs(date_sorti),date_ret,abs(date_lim),num_Adh,num_liv,statut);
-                printf(" \n \n %s ", emprunter);
+                printf(" \n \n %s ", emprunt);
                 if(!mysql_query(&mysql,emprunt))
                 {
-                    printf(" \n \n -------> Emprunt effectuer avec succes <------- \n \n %s est la date limite de retour \n ------->  Taper un caractère puis la touche Enter pour continuer \n ",ctime(abs(date_lim)));
+                    printf(" \n \n -------> Emprunt effectuer avec succes <------- \n \n %s est la date limite de retour \n ------->  Taper un caractère puis la touche Enter pour continuer \n ",ctime(date_lim));
                     scanf("%s",&bloquer);
                     //Appel de la fonctions livres
                     livres();
@@ -118,7 +118,7 @@ int deposer()
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
 {
         //Variables 
-        int choix_liv,date_ret, compte,num_emp,statut=1;
+        int choix_liv,date_ret, compte,num_emp,statut =1;
         char bloquer, *num_Adh, *num_liv;
 
         do
@@ -134,8 +134,8 @@ int deposer()
             printf(" \n \n  ------->  Veillez entrer le numero du livre  \n");
             num_liv = lire(31);
 
-            sprintf(retour,"UPDATE Emprunt SET date_ret='%d',statut='%d' WHERE num_Adh='%s' AND num_liv ='%s'", abs(date_ret),statut,num_Adh,num_liv);
-
+            sprintf(retour,"UPDATE Emprunt SET date_ret='%d',statut='%d' WHERE iden_Adh ='%s' AND iden_liv ='%s'", abs(date_ret),statut,num_Adh,num_liv);
+            printf("\n %s",retour);
             if(!mysql_query(&mysql,retour))
             {
                 printf(" \n \n Retour effacter avec succès \n \n ");
@@ -157,17 +157,13 @@ int deposer()
                 printf("\n \n Echec, vueiller réessayer ! \n \n ");                
                 printf("\n \n \n ------->  Taper 1 - Pour réessayer \n   2 - Pour revenir au menu \n \n");
                 scanf("%d",&deposer);
-                if(deposer == 1)
-                {
-                    deposer==1;
-                }
-                else
+                if(deposer != 1)
                 {
                     main();
                 }
             }
 
-        }while (deposer!=1);
+        }while (deposer==1);
         
     }
     else
@@ -238,35 +234,36 @@ void liste_retard_depot()
 
     int main();
     int gestion();
-
-    int choix;
-
-    printf("  \n \n ******************************** LISTE DES RETARDATAIRES DE DEPOTS DE LIVRES ******************************** \n \n ");
-
-    MYSQL mysql;
-
-    //initialisation 
-    mysql_init(&mysql);
-
-    mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"option");
     
+    printf(" \n \n ******************************** LISTE DES RETARDATAIRES DE DEPOTS DE LIVRES ******************************** \n \n");
+
+    printf("ICCCCI TEST 1");
+    MYSQL mysql;
+    mysql_init(&mysql);
+    mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"option");
+    printf("ICCCCI 13");
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
     {
+        printf("CONNEXION OK");
         int aujour;
         time_t Ajou;
         //time(&Ajou);
         aujour = Ajou;
         char retard[1000];
         //Requête qui sélectionne tout dans ma table scores
-        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim) FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut=0 AND date_lim < %d ",atoi(aujour));
+        printf("ICCCCI 100000");
+        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim) FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut = '0' AND date_lim < '%d' ",atoi(Ajou));
+        printf("\n %s \n",retard);
         mysql_query(&mysql, retard);
+        printf("ICCCCI 2");
         //Déclaration des objets
         MYSQL_RES *result = NULL;
+        printf("ICCCCI 3");
         MYSQL_ROW resul;
-        int i = 1;
+        int i = 1, choix;
         
         result = mysql_use_result(&mysql);
-        
+        printf("ICCCCI 4");
         //Tant qu'il y a encore un résultat ...
         char numero[4] = "N°";
         char noms[35] = "Nom et prenoms";
@@ -328,17 +325,17 @@ int supprimer_emprunter() {
             char emprunt[1000];
             char liv[1000]; //reçoit une requette qui diminue le nombre de libre 
 
-            printf(" \n \n ------->   Enter votre Identifiant \n");
+            printf(" \n \n ------->   Enter l'dentifiant de l'emprunteur \n");
             getchar();
             num_Adh = lire(31);
-            printf(" \n \n  ------->  Veillez entrer le numero du livre  \n");
+            printf(" \n \n  ------->  Entrer le numero du livre  \n");
             num_liv = lire(31);
 
-            sprintf(emprunt,"DELETE FROM Emprunt WHERE iden_Adh = '%s' AND iden_liv = '%s' AND statut= '0'", num_Adh, num_liv);
+            sprintf(emprunt,"DELETE FROM Emprunt WHERE iden_Adh = '%s' AND iden_liv = '%s' AND statut = '0'", num_Adh, num_liv);
             if(!mysql_query(&mysql,emprunt))
             {
                 printf(" \n \n -------> Emprunt a été supprimer avec succes <------- ");
-                printf("\n \n \n ------->  Voulez-vous supprimer un autre ? \n \n   1 - OUI \n   2 - NON (quitter la bibliotheque) \n \n");
+                printf("\n \n \n ------->  Voulez-vous supprimer un autre ? \n \n   1 - OUI \n   2 - NON (retour au menu gestionnaire) \n \n");
                 scanf("%d",&supprimer);
                 if(supprimer != 1)
                 {

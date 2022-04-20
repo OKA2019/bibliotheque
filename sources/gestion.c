@@ -4,6 +4,7 @@
 #include "../header/clients.h"
 #include "../header/emprunts.h"
 #include "../header/liste_adherants.h"
+#include "../header/action_client.h"
 #include "../header/bibliotheque.h"
 
 int gestion()

@@ -27,13 +27,13 @@ int main()
     printf("  \n \n ******************************** BIENVENU DANS LA BIBLIOTHEQUE NUMERIQUE DE LA SIGL ******************************** \n \n ");
 
 
-    printf(" \n ------->  1 - Livres ");
-    printf(" \n ------->  2 - Emprunter ");
-    printf(" \n ------->  3 - Deposer");
-    printf(" \n ------->  4 - Inscription");
-    printf(" \n ------->  5 - Gestionnaire");
-    printf(" \n ------->  6 - Quitter \n");
-    printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
+    printf(" \n ----------------------------------->  1 - Livres ");
+    printf(" \n ----------------------------------->  2 - Emprunter ");
+    printf(" \n ----------------------------------->  3 - Deposer");
+    printf(" \n ----------------------------------->  4 - Inscription");
+    printf(" \n ----------------------------------->  5 - Gestionnaire");
+    printf(" \n ----------------------------------->  6 - Quitter \n");
+    printf("\n \n  ---------------------------->  Taper le numero de votre choiX \n \n");
     
     do
     {
