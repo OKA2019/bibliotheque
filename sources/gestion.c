@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../header/livres.h"
-#include "../header/ajouter_livres.h"
-#include "../header/adherants.h"
-#include "../header/liste_emprunts.h"
+#include "../header/clients.h"
+#include "../header/emprunts.h"
 #include "../header/liste_adherants.h"
 #include "../header/bibliotheque.h"
 
@@ -17,53 +16,92 @@ int gestion()
     void livres();
     int ajouter_livres();
     void liste_adherants();
-    int liste_emprunts();
+    void liste_emprunts();
+    void liste_retard_depot();
+    int supprimer_emprunter();
 
     //Variables 
-    int choix_liv,choix_menu, compte_exit;
+    int choix_liv,choix_menu, option;
 
+    printf(" \n \n ***************** GESTION DE LA BIBLIOTHEQUE NUMERIQUE ***************** \n \n ");
+    printf(" \n ***************** MENU DU GESTIONNAIRE ***************** \n \n ");
 
-        printf(" \n \n ***************** GESTION DE LA BIBLIOTHEQUE NUMERIQUE ***************** \n \n ");
+    printf(" \n -------> 1 - Livres \n");
+    printf(" \n -------> 2 - Emprunts \n");
+    printf(" \n -------> 3 - Nos clients \n");
+    printf(" \n -------> 4 - Accueil \n");
 
-        printf(" \n ***************** MENU DU GESTIONNAIRE ***************** \n \n ");
-
-        printf(" \n  1 - Adherants \n");
-        printf(" \n  2 - Liste des livres \n");
-        printf(" \n  3 - Listes des Emprunts \n");
-        printf(" \n  4 - Ajouter des livres \n");
-        printf(" \n  5 - Accueil \n");
-
-        printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
-
-        do
+    printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
+    do
+    {
+        scanf("%d",&choix_menu);
+        switch(choix_menu)
         {
-            scanf("%d",&choix_menu);
-            switch(choix_menu)
-            {
-                case 1:
-                    //Appel de la fonctions listes des aderents
-                    liste_adherants();
-                break;
-                case 2:
-                    //Appel de la fonctions listes
-                    livres();
-                break;
-                case 3:
-                    //Appel de la fonctions listes des emprunts
-                    liste_emprunts();
-                case 4:
-                    //Appel de la fonctions Ajouter livres
+            case 1:
+                livres();
+                printf(" \n ********** 1 - Ajouter des livres \n");
+                printf(" \n ********** 2 - Modifier un livre \n");
+                printf(" \n ********** 3 - Supprimer des livre \n");
+                printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
+                scanf("%d",&option);
+                if (option == 1)
+                {
                     ajouter_livres();
-                case 5:
-                    //Appel de la fonctions listes des aderents
+                }
+                else if (option == 2)
+                {
+                    modifier_livres();
+                }
+                else if (option == 3)
+                {
+                    supprimer_livres();
+                }
+                else
+                {
+                    gestion();
+                }
+            break;
+            case 2:
+                liste_emprunts();
+                printf(" \n \n \n ********** 1 - Liste des retards \n");
+                printf(" \n ********** 2 - Supprimer un emprunt \n");
+                printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
+                scanf("%d",&option);
+                if (option == 1)
+                {
+                    liste_retard_depot();
+                }
+                else if (option == 2)
+                {
+                    supprimer_emprunter();
+                }
+                else
+                {
+                    gestion();
+                }
+            break;
+            case 3:
+                liste_adherants();
+                printf("\n \n \n ------->  Voulez-vous revenir au menu gestionnaire ? \n \n   1 - OUI \n   2 - NON (retour a page d'accueil) ");
+                printf("\n \n  ------->  Taper le numero de votre choiX \n \n");
+                scanf("%d",&option);
+                if(option == 1)
+                {
+                    gestion();
+                }
+                else
+                {
                     main();
-                case 6:
-                    printf(" \n Merci d'être venu, a la prochaine ");
-                default:
-                    printf(" \n ERREUR DE SAISI VUEILLER RÉESSAYER ! ");
-                    choix_menu==0;
-            }
-        } while (choix_menu==0);
-       
+                }
+            break;
+            case 4:
+                main();
+            break;
+            default:
+                printf(" \n ERREUR DE SAISI VUEILLER RÉESSAYER ! \n");
+                choix_menu = 0;
+        }
+    } while (choix_menu==0);
+    
     return 0;
 }

@@ -1,32 +1,23 @@
-biblio_num : ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o main.o 
-	gcc -o biblio_num ajouter_livres.o livres.o adherants.o emprunter.o deposer.o liste_emprunts.o liste_adherants.o gestion.o main.o -L. -lmysqlclient
-
-ajouter_livres.o : ajouter_livres.c
-	gcc -c ajouter_livres.c
+main : lire.o livres.o clients.o action_client.o gestion.o main.o
+	gcc -o main lire.o livres.o clients.o action_client.o gestion.o main.o -L. -lmysqlclient
 
 livres.o : livres.c
 	gcc -c livres.c
 
-adherants.o : adherants.c
-	gcc -c adherants.c
+clients.o : clients.c
+	gcc -c clients.c
 
-emprunter.o : emprunter.c
-	gcc -c emprunter.c
-
-deposer.o : deposer.c
-	gcc -c deposer.c
-
-liste_emprunts.o : liste_emprunts.c
-	gcc -c liste_emprunts.c
-
-liste_adherants.o : liste_adherants.c
-	gcc -c liste_adherants.c
+action_client.o : action_client.c
+	gcc -c action_client.c
 
 gestion.o : gestion.c
 	gcc -c gestion.c
+
+lire.o : lire.c
+	gcc -c lire.c
 
 main.o : main.c
 	gcc -c main.c
 
 clean:
-	rm *.o biblio_num
+	rm *.o main

@@ -3,9 +3,8 @@
 #include "arpa/inet.h"
 #include "MYSQL/mysql.h"
 #include "../header/livres.h"
-#include "../header/adherants.h"
-#include "../header/emprunter.h"
-#include "../header/deposer.h"
+#include "../header/clients.h"
+#include "../header/action_client.h"
 #include "../header/gestion.h"
 
 
@@ -14,7 +13,7 @@ int main()
     system("clear");
     
     //Appel initialisations des differents fonctions
-    int adherants();
+    int ajout_adherants();
     int emprunter();
     void livres();
     int deposer();
@@ -51,7 +50,7 @@ int main()
             case 3 :
                 deposer();
             case 4 :
-                adherants();
+                ajout_adherants();
                 break;
             case 5 :
                 gestion();
@@ -64,9 +63,6 @@ int main()
                 choix = 0;
         }
     } while (choix == 0);
-    
-    
-    printf(" \n SORTIE ");
 
     return 0;
 }
