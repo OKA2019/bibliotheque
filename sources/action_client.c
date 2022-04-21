@@ -30,7 +30,7 @@ int emprunter() {
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
     {
         //Variables 
-        int choix_liv,date_lim, date_ret = 0, nb_emprunt,date_sor, compte,num_emp = 0,statut=0,choix;
+        int choix_liv, *date_lim, date_ret = 0, nb_emprunt,date_sor, compte,num_emp = 0,statut=0,choix;
         char bloquer, *num_Adh, *num_liv;
 
         printf("\n \n \n ------->  Avez vous un compte ? \n \n   1 - OUI \n   2 - NON \n   3 - RETOUR \n \n");
@@ -51,17 +51,22 @@ int emprunter() {
                 printf(" \n \n  ------->  Combien de jours va durée l'emprunt ? \n");
                 scanf("%d",&nb_emprunt);
 
+
                 time_t date_sorti;
                 time(&date_sorti);
+
+                //time_t date_sorti;
+                //time(&date_sorti);
+
                 nb_emprunt = nb_emprunt * 86400;
                 date_lim = date_sorti + nb_emprunt;
-                
-                sprintf(emprunt,"INSERT INTO Emprunt(num_emp,date_sor,date_ret,date_lim,iden_Adh,iden_liv,statut) VALUES('%d','%d','%d','%d','%s','%s','%d')",num_emp,abs(date_sorti),date_ret,abs(date_lim),num_Adh,num_liv,statut);
-                printf(" \n \n %s ", emprunt);
+
+                sprintf(emprunt,"INSERT INTO Emprunt(num_emp,date_sor,date_ret,date_lim,iden_Adh,iden_liv,statut) VALUES('%d','%d','%d','%d','%s','%s','%d')",num_emp, date_sorti, date_ret, date_lim, num_Adh,num_liv, statut);
                 if(!mysql_query(&mysql,emprunt))
                 {
-                    printf(" \n \n -------> Emprunt effectuer avec succes <------- \n \n %s est la date limite de retour \n ------->  Taper un caractère puis la touche Enter pour continuer \n ",ctime(date_lim));
+                    printf(" \n \n -------> Emprunt effectuer avec succes <------- \n La date limite de retour est : %s \n \n ------->  Taper un caractère puis la touche Enter pour continuer \n ",ctime(&date_lim));
                     scanf("%s",&bloquer);
+
                     //Appel de la fonctions livres
                     livres();
 
@@ -237,33 +242,23 @@ void liste_retard_depot()
     
     printf(" \n \n ******************************** LISTE DES RETARDATAIRES DE DEPOTS DE LIVRES ******************************** \n \n");
 
-    printf("ICCCCI TEST 1");
     MYSQL mysql;
     mysql_init(&mysql);
     mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"option");
-    printf("ICCCCI 13");
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
     {
-        printf("CONNEXION OK");
-        int aujour;
         time_t Ajou;
-        //time(&Ajou);
-        aujour = Ajou;
+        time(&Ajou);
         char retard[1000];
         //Requête qui sélectionne tout dans ma table scores
-        printf("ICCCCI 100000");
-        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim) FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut = '0' AND date_lim < '%d' ",atoi(Ajou));
-        printf("\n %s \n",retard);
+        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim), date_lim FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut = '0' AND date_lim < '%d' ", Ajou);
         mysql_query(&mysql, retard);
-        printf("ICCCCI 2");
         //Déclaration des objets
         MYSQL_RES *result = NULL;
-        printf("ICCCCI 3");
         MYSQL_ROW resul;
         int i = 1, choix;
         
         result = mysql_use_result(&mysql);
-        printf("ICCCCI 4");
         //Tant qu'il y a encore un résultat ...
         char numero[4] = "N°";
         char noms[35] = "Nom et prenoms";
