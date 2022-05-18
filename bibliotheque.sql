@@ -104,6 +104,34 @@ LOCK TABLES `livres` WRITE;
 INSERT INTO `livres` VALUES ('liv1','C','DIABY','Informatique',2022,15),('liv2','Algorithmes','DIABY','info',2018,32),('liv3','NoSQL','KANGA','NoSQL',2010,50),('liv5','RECHERCHER OPERATIONNEL','DIABY MOUSTAPHA','cours de RO',2015,70);
 /*!40000 ALTER TABLE `livres` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `gestionnaire`
+--
+
+DROP TABLE IF EXISTS `gestionnaire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gestionnaire` (
+  `id_gestion` int unsigned NOT NULL AUTO_INCREMENT,
+  `nom_gestion` varchar(50) NOT NULL,
+  `pass_gestion` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_gestion`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gestionnaire`
+--
+
+LOCK TABLES `gestionnaire` WRITE;
+/*!40000 ALTER TABLE `gestionnaire` DISABLE KEYS */;
+INSERT INTO `gestionnaire` VALUES (1,'OKA','1234');
+INSERT INTO `gestionnaire` VALUES (2,'zaomdi','1234');
+/*!40000 ALTER TABLE `gestionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

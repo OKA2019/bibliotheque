@@ -1,3 +1,14 @@
+/**
+ * @file lire.c
+ * @author OUATTARA KOUNAPETRI ABDOULAYE(Kounapetri05@gmail.com) et ZOMADI MARCLEORD(zomadimarcleord@gmail.com)
+ * @brief Gestion des livres
+ * @version 0.1
+ * @date 2022-02-20 au 2022-03-14
+ * 
+ * @copyright Copyright (c) DIÉKÉ JONATHAN
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

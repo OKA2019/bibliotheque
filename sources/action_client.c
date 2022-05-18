@@ -1,3 +1,14 @@
+/**
+ * @file action_client.c
+ * @author OUATTARA KOUNAPETRI ABDOULAYE(Kounapetri05@gmail.com) et ZOMADI MARCLEORD(zomadimarcleord@gmail.com)
+ * @brief Gestion des differents actions d'un client (Aderhants)
+ * @version 0.1
+ * @date 2022-02-20 au 2022-03-14
+ * 
+ * @copyright Copyright (c) OKA && ZOMADI
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +21,11 @@
 #include "../header/gestion.h"
 #include "../header/lire.h"
 
-//Fonction d'emporunt de livres
+
+/**
+ * @brief Fonction qui permet à un client d'emprunter un livre
+ * 
+ */
 int emprunter() {
 
     //Declarition des methodes
@@ -107,7 +122,10 @@ int emprunter() {
     return (0);
 }
 
-//Fonction de depot de livres
+/**
+ * @brief Fonction de depot de livres
+ * 
+ */
 int deposer()
 {
     // initialisation des fonctions
@@ -121,7 +139,7 @@ int deposer()
     mysql_init(&mysql);
     mysql_options(&mysql,MYSQL_READ_DEFAULT_GROUP,"option");
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
-{
+    {
         //Variables 
         int choix_liv,date_ret, compte,num_emp,statut =1;
         char bloquer, *num_Adh, *num_liv;
@@ -179,7 +197,10 @@ int deposer()
     return 0;
 }
 
-//Liste des e;prunts
+/**
+ * @brief Fonction qui liste des emprunts
+ * 
+ */
 void liste_emprunts()
 {
     //On efface l'écrans
@@ -198,7 +219,7 @@ void liste_emprunts()
     if(mysql_real_connect(&mysql,"localhost","oka2019","123456789","bibliotheque",0,NULL,0))
     {
         //Requête qui sélectionne tout dans ma table scores
-        mysql_query(&mysql, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim) FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut=0 ");
+        mysql_query(&mysql, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor,'%W, %D %M %Y'), from_unixtime(date_lim,'%W, %D %M %Y') FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut=0 ");
         //Déclaration des objets
         MYSQL_RES *result = NULL;
         MYSQL_ROW resul;
@@ -216,10 +237,10 @@ void liste_emprunts()
         char sortie[18] = "Date de sortie";
         char limite[18] = "Date limite";
 
-        printf(" \n \n |  %4s | %35s | %12s | %12s | %15s | %15s | %19s | %19s | \n  ", numero,noms,Contacts,Residence,Titre,Auteur,sortie,limite);
+        printf(" \n \n|%4s| %30s | %8s | %8s | %20s | %20s | %24s | %24s | \n  ", numero,noms,Contacts,Residence,Titre,Auteur,sortie,limite);
         while ((resul = mysql_fetch_row(result)))
         {
-            printf(" \n \n | %4d | %10s %24s | %12s | %12s | %15s | %15s | %18s | %18s | \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],resul[7]);
+            printf(" \n \n|%2d | %10s %16s | %4s | %10s | %20s | %20s | %20s | %20s | \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],resul[7]);
             i++;
         }
         mysql_close(&mysql);
@@ -231,7 +252,10 @@ void liste_emprunts()
 
 }
 
-//Liste des retards de depot de livres
+/**
+ * @brief Fonction qui liste des retards de depot de livres
+ * 
+ */
 void liste_retard_depot()
 {
     //On efface l'écrans
@@ -251,12 +275,13 @@ void liste_retard_depot()
         time(&Ajou);
         char retard[1000];
         //Requête qui sélectionne tout dans ma table scores
-        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor), from_unixtime(date_lim), date_lim FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut = '0' AND date_lim < '%d' ", Ajou);
+        sprintf(retard, "SELECT nom,prenoms,contact,residence,titre,auteur, from_unixtime(date_sor,'%W, %D %M %Y'), from_unixtime(date_lim), date_lim FROM Adherents,livres,Emprunt WHERE num_Adh = iden_Adh AND num_liv = iden_liv AND statut = '0' AND date_lim < '%d' ", Ajou);
         mysql_query(&mysql, retard);
         //Déclaration des objets
         MYSQL_RES *result = NULL;
         MYSQL_ROW resul;
-        int i = 1, choix;
+        int i = 1;
+        char choix;
         
         result = mysql_use_result(&mysql);
         //Tant qu'il y a encore un résultat ...
@@ -269,24 +294,16 @@ void liste_retard_depot()
         char sortie[18] = "Date de sortie";
         char limite[18] = "Date limite";
 
-        printf(" \n \n |  %4s | %35s | %12s | %12s | %15s | %15s | %19s | %19s | \n  ", numero,noms,Contacts,Residence,Titre,Auteur,sortie,limite);
+        printf(" \n \n|%4s| %32s | %10s | %10s | %20s | %20s | %24s | %24s | \n  ", numero,noms,Contacts,Residence,Titre,Auteur,sortie,limite);
         while ((resul = mysql_fetch_row(result)))
         {
-            printf(" \n \n | %4d | %10s %24s | %12s | %12s | %15s | %15s | %18s | %18s | \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],resul[7]);
+            printf(" \n \n|%2d | %10s %16s | %10s | %10s | %20s | %20s | %21s | %21s | \n  ",i,resul[0],resul[1],resul[2],resul[3],resul[4],resul[5],resul[6],resul[7]);
             i++;
         }
         mysql_close(&mysql);
 
-        printf("\n \n \n ------->  Voulez-vous revenir au menu gestionnaire ? \n \n   1 - OUI \n   2 - NON (retour au menu) \n \n");
-        scanf("%d",&choix);
-        if(choix == 1)
-        {
-            gestion();
-        }
-        else
-        {
-            main();
-        }
+        printf("\n \n \n ------->  Taper un caractere pour continuer \n \n");
+        scanf("%s",&choix);
     }
     else
     {
@@ -295,7 +312,9 @@ void liste_retard_depot()
 
 }
 
-//Fonction d'emporunt de livres
+/**
+ * @brief Fonction de suppression d'un emprunt
+ */
 int supprimer_emprunter() {
     
     int gestion();
@@ -341,10 +360,6 @@ int supprimer_emprunter() {
             {
                 printf("\n \n -------> Echec veuillez ressayer en tapant 1  <------- \n \n ");
                 scanf("%d",&supprimer);
-                if(supprimer != 1)
-                {
-                    gestion();
-                }
             }
         } while (supprimer==1);
     }

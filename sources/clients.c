@@ -1,3 +1,13 @@
+/**
+ * @file client.c
+ * @author OUATTARA KOUNAPETRI ABDOULAYE(Kounapetri05@gmail.com) et ZOMADI MARCLEORD(zomadimarcleord@gmail.com)
+ * @brief gestion des ajout et affiches des clients
+ * @version 0.1
+ * @date 2022-02-20 au 2022-03-14
+ * 
+ * @copyright Copyright (c) OKA && ZOMADI
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +18,9 @@
 #include "../header/gestion.h"
 #include "../header/lire.h"
 
+/**
+ * @brief Fonction qui permet d'ajouter un client (adherants)
+ */
 int ajout_adherants(){
 
     int main();
@@ -15,8 +28,8 @@ int ajout_adherants(){
     int emprunter();
     char *lire(int size);
 
-    int ajouter = 1,age,contact,sexe=0;
-    char *num_Adh,*nom, *prenoms, *residence, *continuer;
+    int ajouter = 1,age,sexe=0;
+    char *num_Adh,*nom, *prenoms,*contact, *residence, *continuer;
     MYSQL mysql;
 
     //initialisation 
@@ -42,23 +55,22 @@ int ajout_adherants(){
             printf(" Sexe :  \n Taper  1 - Homme           2 - Femme \n ");
             scanf("%d",&sexe);
             printf(" Contact :  ");
-            scanf("%d",&contact);
-            printf(" residence :  ");
             getchar();
+            contact=lire(31);
+            printf(" residence :  ");
             residence = lire(31);
 
             char add[1000]; 
             //Copie de la requette dans la variables add
-            sprintf(add, "INSERT INTO Adherents(num_Adh,nom,prenoms,age,contact,residence,sexe) VALUES ('%s','%s','%s','%d','%d','%s','%d')",num_Adh,nom,prenoms,age,contact,residence,sexe);
+            sprintf(add, "INSERT INTO Adherents(num_Adh,nom,prenoms,age,contact,residence,sexe) VALUES ('%s','%s','%s','%d','%s','%s','%d')",num_Adh,nom,prenoms,age,contact,residence,sexe);
             
             if(!mysql_query(&mysql,add))
             {
-                printf("\n Inscription valider, veuillez renseigner les information du livres a emprunter \n \n ");
+                printf("\n ****************  Inscription valider, veuillez renseigner les information du livres a emprunter \n \n ");
 
-                printf(" \n \n Votre NUMERO D'IDENTFIANT est le %s . \n  Garder le precieusement \n \n ",num_Adh);
+                printf(" \n \n ****************  Votre NUMERO D'IDENTFIANT est le %s . \n  Garder le precieusement \n \n ",num_Adh);
 
                 printf(" \n Taper un caractere puis Entrer pour continuer \n  ");
-
                 continuer = lire(11);
 
                 livres();
@@ -80,7 +92,9 @@ int ajout_adherants(){
     
 }
 
-//Lisste des clients (liste_adherants)
+/**
+ * @brief Fonction qui liste des clients (liste_adherants)
+ */
 void liste_adherants()
 {
 
@@ -141,12 +155,7 @@ void liste_adherants()
 
         printf("\n \n \n ------->  Voulez-vous revenir au menu gestionnaire ? \n \n   1 - OUI \n   2 - NON (retour au menu principal) \n \n");
         scanf("%d",&choix);
-        if(choix == 1)
-        {
-            //appel la fonction menu(des utilisateurs)
-            gestion();
-        }
-        else
+        if(choix == 2)
         {
             //appel la fonction main(des utilisateurs)
             main();

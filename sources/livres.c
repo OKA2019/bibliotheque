@@ -1,3 +1,14 @@
+/**
+ * @file livres.c
+ * @author OUATTARA KOUNAPETRI ABDOULAYE(Kounapetri05@gmail.com) et ZOMADI MARCLEORD(zomadimarcleord@gmail.com)
+ * @brief Gestion des livres
+ * @version 0.1
+ * @date 2022-02-20 au 2022-03-14
+ * 
+ * @copyright Copyright (c) OKA && ZOMADI
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "arpa/inet.h"
@@ -5,7 +16,10 @@
 #include "../header/gestion.h"
 #include "../header/lire.h"
 
-//Liste des livres
+/**
+ * @brief Fonction qui permet de liste des livres
+ * 
+ */
 int livres()
 {
     system("clear");
@@ -43,7 +57,10 @@ int livres()
     return (0);
 }
 
-//Ajout de livre
+/**
+ * @brief Fonction qui permet d'ajouter un livre
+ * 
+ */
 int ajouter_livres()
 {
 
@@ -95,7 +112,6 @@ int ajouter_livres()
                 else
                 {
                     mysql_close(&mysql);
-                    gestion();
                 }
             }
             else
@@ -110,7 +126,6 @@ int ajouter_livres()
                 else
                 {
                     mysql_close(&mysql);
-                    gestion();
                 }
             }
         } while (ajouter==0);
@@ -122,7 +137,10 @@ int ajouter_livres()
     return (0);
 }
 
-//Modifier les informlations d'un livre livre
+/**
+ * @brief Fonction qui permet de modifier les informlations d'un livre 
+ * 
+ */
 int modifier_livres()
 {
     int gestion();
@@ -171,7 +189,6 @@ int modifier_livres()
                 else
                 {
                     mysql_close(&mysql);
-                    gestion();
                 }
             }
             else
@@ -198,7 +215,10 @@ int modifier_livres()
     return (0);
 }
 
-//Suppression de livres
+/**
+ * @brief Fonction qui permet de suppression de livres
+ * 
+ */
 int supprimer_livres()
 {
     int gestion();
@@ -253,7 +273,6 @@ int supprimer_livres()
                 else
                 {
                     mysql_close(&mysql);
-                    gestion();
                 }
             }
         } while (supprimer==0);
